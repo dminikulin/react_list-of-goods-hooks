@@ -69,11 +69,14 @@ export const App: React.FC = () => {
   };
 
   const reverse = (): void => {
-    setReversed(!isReversed);
+    setReversed(prevReversed => {
+      const newReversed = !prevReversed;
+      const sorted = modifyGoods(goodsFromServer, sortType, newReversed);
 
-    const sorted = modifyGoods(goodsFromServer, sortType, isReversed);
+      setVisibleGoods(sorted);
 
-    setVisibleGoods([...sorted].toReversed());
+      return newReversed;
+    });
   };
 
   const reset = (): void => {
